@@ -10,7 +10,7 @@ source:
   sha256: 7e68e90b01f9eff71332b25001f85c75495fc4e3a836701876183c4bcfd0540a
 
 build:
-  number: 0
+  number: 1
   script: python -m pip install --no-deps --no-build-isolation --ignore-installed -vv .
   skip: true  # [py<37]
 
@@ -31,6 +31,7 @@ test:
     - pytest_timeout
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - py.test --help
 
 about:
