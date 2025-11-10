@@ -1,27 +1,27 @@
 {% set name = "pytest-timeout" %}
-{% set version = "2.2.0" %}
+{% set version = "2.4.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 3b0b95dabf3cb50bac9ef5ca912fa0cfc286526af17afc806824df20c2f72c90
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name|replace("-", "_") }}-{{ version }}.tar.gz
+  sha256: 7e68e90b01f9eff71332b25001f85c75495fc4e3a836701876183c4bcfd0540a
 
 build:
   number: 0
   script: python -m pip install --no-deps --no-build-isolation --ignore-installed -vv .
+  skip: true  # [py<37]
 
 requirements:
   host:
     - pip
     - python
     - setuptools
-    - wheel
   run:
     - python
-    - pytest >=5.0.0
+    - pytest >=7.0.0
 
 test:
   requires:
@@ -31,6 +31,7 @@ test:
     - pytest_timeout
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - py.test --help
 
 about:
