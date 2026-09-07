@@ -1,18 +1,18 @@
 {% set name = "pytest-timeout" %}
-{% set version = "2.4.0" %}
+{% set version = "2.5.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name|replace("-", "_") }}-{{ version }}.tar.gz
-  sha256: 7e68e90b01f9eff71332b25001f85c75495fc4e3a836701876183c4bcfd0540a
+  sha256: 68c9d82dfe95fa65712e107010c9344e7d8b4afe8c975a7be0d273d939583a93
 
 build:
   number: 0
   script: python -m pip install --no-deps --no-build-isolation --ignore-installed -vv .
-  skip: true  # [py<37]
+  skip: true  # [py<310]
 
 requirements:
   host:
@@ -21,7 +21,7 @@ requirements:
     - setuptools
   run:
     - python
-    - pytest >=7.0.0
+    - pytest >=8.4.0
 
 test:
   requires:
